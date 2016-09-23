@@ -1,0 +1,18 @@
+{
+  "name": "@optimistdigital/core-js",
+  "version": "1.0.0",
+  "description": "Optimist Digital core JS modules",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/optimistdigital/core-js.git"
+  },
+  "contributors": [
+      "Matis Lepik <matis.lepik@gmail.com> (http://matislepik.eu/)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/optimistdigital/core-js/issues"
+  },
+  "homepage": "https://github.com/optimistdigital/core-js#readme"
+}
