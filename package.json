@@ -1,6 +1,6 @@
 {
   "name": "@optimistdigital/core-js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Optimist Digital core JS modules",
   "main": "./dist/index.js",
   "scripts": {
