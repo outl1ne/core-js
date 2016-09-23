@@ -4,7 +4,7 @@ This is a collection of JS functionalities that we commonly need to use. Documen
 
 ## Assumptions
 
-We assume that $ is a globally accessible alias for jQuery and that these modules are used with babel, using ES6 imports.
+We assume that $ is a globally accessible alias for jQuery.
 
 ## Usage
 
