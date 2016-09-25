@@ -17,3 +17,7 @@ modals({ togglerAttribute: 'data-modal-btn' });
 import CoreJS from '@optimistdigital/core-js';
 CoreJS.dropdowns({ contentAttribute: 'data-tooltip' });
 ```
+## Testing
+
+To test, type `npm test`
+Tests are run using Mocha + jsdom on the build version.

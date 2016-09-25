@@ -13,3 +13,5 @@ try {
 }
 
 require('babel-register')(config);
+
+console.debug = console.log;

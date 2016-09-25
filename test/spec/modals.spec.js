@@ -2,7 +2,7 @@
 
 import expect from 'expect';
 import renderToDom from '../utils/renderToDom';
-import { modals } from '../../src/index';
+import { modals } from '../../dist/index';
 
 describe(`Modal`, function() {
 
