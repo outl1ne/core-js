@@ -4,10 +4,10 @@
   "description": "Optimist Digital core JS modules",
   "main": "./dist/index.js",
   "scripts": {
-    "clean": "rm -r dist/*",
+    "clean": "rm -r dist/* 2> /dev/null; exit 0",
     "lint": "eslint -c .eslintrc src; exit 0",
-    "jsdoc": "rm -r docs/* && jsdoc -R readme.md -t node_modules/minami -r ./src -d ./docs",
-    "build": "npm run clean && babel --presets es2015,stage-0 -d dist src",
+    "jsdoc": "rm -r docs/* 2> /dev/null; jsdoc -R readme.md -t node_modules/minami -r ./src -d ./docs",
+    "build": "npm run clean; babel --presets es2015,stage-0 -d dist src",
     "prepublish": "npm run jsdoc && npm run build"
   },
   "repository": {
