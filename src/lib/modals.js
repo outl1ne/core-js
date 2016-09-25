@@ -19,12 +19,12 @@
  * @module lib/modals
  */
 
-let containerAttribute; // = 'data-modal';
-let togglerAttribute; // = 'data-modal-toggler';
-let closerAttribute; // = 'data-modal-closer';
-let openerAttribute; // = 'data-modal-opener';
-let openAttribute; // = 'data-modal-open';
-let closeOnEscAttribute; // = 'data-close-on-esc';
+let containerAttribute;
+let togglerAttribute;
+let closerAttribute;
+let openerAttribute;
+let openAttribute;
+let closeOnEscAttribute;
 /**
  * Starts listening to click and key events, adds initial attributes if missing
  * @param {object} [options]

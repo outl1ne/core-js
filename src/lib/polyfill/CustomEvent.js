@@ -4,7 +4,6 @@
  */
 
 /* eslint-disable */
-
 (function () {
 
   if ( typeof window.CustomEvent === "function" ) return false;
