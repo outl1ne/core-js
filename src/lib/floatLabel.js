@@ -8,7 +8,7 @@
  * <label class="input-field">
  *   <input type="text">
  * </label>
- * @module app/scripts/floatLabel
+ * @module lib/floatLabel
  */
 
 let inputFieldSelector;

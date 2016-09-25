@@ -1,7 +1,7 @@
 /**
  * DEVICE INFO:
  * This module provides information about the device (OS, browser, etc)
- * @module app/scripts/deviceInfo
+ * @module lib/deviceInfo
  */
 let _cacheViewport; // Whether you want to automatically cache the viewport to prevent redraws
 let _isTouchDevice = null;
@@ -30,9 +30,7 @@ export function init(options = {}) {
 }
 
 /**
- * Returns the width of the viewport. Note that this gets updated on resize - if you
- * don't use anything that depends on the window width (such as dropdown.js),
- * you may want to disable this to slightly improve resize performance
+ * Returns the width of the viewport.
  * @return {number} Cached viewport width
  */
 export function getViewportWidth() {

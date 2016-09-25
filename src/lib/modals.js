@@ -10,14 +10,13 @@
  *   window.addEventListener('modal:closed', (evt) => { console.log(evt.detail.$modal, evt.detail.name) }
  *
  * Example of usage:
- *
  *  <button data-modal-toggler="demo-modal">Click to toggle modal</button>
  *  <div data-modal="demo-modal" data-modal-open="false" class="basic-modal">
  *    <p>Modal content</p>
  *    <button data-modal-closer="demo-modal">Click to close modal</button>
  *  </div>
  *
- * @module app/scripts/modals
+ * @module lib/modals
  */
 
 let containerAttribute; // = 'data-modal';

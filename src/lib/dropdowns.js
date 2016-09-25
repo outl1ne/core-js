@@ -17,7 +17,7 @@
  *     Dropdown content!
  *   </div>
  * </div>
- * @module app/scripts/dropdowns
+ * @module lib/dropdowns
  */
 
 import { getViewportWidth } from './deviceInfo';
