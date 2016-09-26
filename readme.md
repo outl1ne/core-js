@@ -12,10 +12,11 @@ You can import each module individually, or use the default import which gives y
 
 ```
 import { modals } from '@optimistdigital/core-js';
-modals({ togglerAttribute: 'data-modal-btn' });
+modals.init({ togglerAttribute: 'data-modal-btn' });
+modals.closeAllModals();
 
 import CoreJS from '@optimistdigital/core-js';
-CoreJS.dropdowns({ contentAttribute: 'data-tooltip' });
+CoreJS.dropdowns.init({ contentAttribute: 'data-tooltip' });
 ```
 ## Testing
 
