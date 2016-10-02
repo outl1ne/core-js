@@ -1,4 +1,5 @@
 import './lib/optimizedEvents'; // Allows you to listen to resize/scroll/etc in a throttled way
+import './lib/polyfill/requestAnimationFrame'; // Polyfills requestAnimationFrame (CustomEvent depends on this)
 import './lib/polyfill/CustomEvent'; // Polyfills custom events
 
 import { initSmoothScrollToAnchor } from './lib/smoothScroll';
