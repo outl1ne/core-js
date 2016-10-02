@@ -103,7 +103,6 @@ export function keepInViewport() {
     const dropdownWidthHalf = dropdownWidth / 2;
 
     if (openerCenter + dropdownWidthHalf > viewportWidth) { // If dropdown would go past screen to the right
-      // Pin to right
       $dropdown.css({
         transform: `translate(${viewportWidth - (openerCenter + dropdownWidthHalf) - dropdownWidthHalf}px, 20px)`
       });

@@ -1,0 +1,7 @@
+verbose: false
+instrumentation:
+    root: .
+    extensions:
+        - .js
+    default-excludes: true
+    excludes: ['dist/lib/polyfill/**']

@@ -26,6 +26,21 @@ describe(`Device info`, function() {
   });
 });
 
+describe(`Touch device check with undefined navigator`, function() {
+  beforeEach(`Mock navigator`, () => {
+    this.realNavigator = global.navigator;
+    global.navigator = undefined;
+  });
+
+  it(`should not think we are a touch device`, () => {
+    expect(deviceInfo.isTouchDevice()).toBe(false);
+  });
+
+  afterEach(`Restore navigator`, () => {
+    global.navigator = this.realNavigator;
+  });
+});
+
 describe(`Device info with viewport size caching + navigator with touch events`, function() {
   const mockedWidth = 800;
 

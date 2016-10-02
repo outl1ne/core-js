@@ -3,3 +3,4 @@ test
 .babelrc
 .eslintrc
 .editorconfig
+coverage
