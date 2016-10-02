@@ -17,7 +17,7 @@
         var func = function() {
             if (running) { return; }
             running = true;
-            requestAnimationFrame(function() {
+            window.requestAnimationFrame(function() {
                 obj.dispatchEvent(new CustomEvent(name));
                 running = false;
             });
