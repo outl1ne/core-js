@@ -27,13 +27,13 @@ let openAttribute;
 let closeOnEscAttribute;
 /**
  * Starts listening to click and key events, adds initial attributes if missing
- * @param {object} [options]
- * @param {string} [options.containerAttribute] - Attr. for the modal container that will contain the modal's name
- * @param {string} [options.togglerAttribute] - Attr. that contains a modal's name and will toggle that modal when clicked
- * @param {string} [options.closerAttribute] - Attr. that contains a modal's name and will close that modal when clicked
- * @param {string} [options.openerAttribute] - Attr. that contains a modal's name and will open that modal when clicked
- * @param {string} [options.openAttribute] - Attr. that determines whether the modal is open or not.
- * @param {string} [options.closeOnEscAttribute] - Attr. that determines whether the modal should close when the escape key is pressed. (Missing value is treated as true)
+ * @param {object} [options={}]
+ * @param {string} [options.containerAttribute='data-modal'] - Attr. for the modal container that will contain the modal's name
+ * @param {string} [options.togglerAttribute='data-modal-toggler'] - Attr. that contains a modal's name and will toggle that modal when clicked
+ * @param {string} [options.closerAttribute='data-modal-closer'] - Attr. that contains a modal's name and will close that modal when clicked
+ * @param {string} [options.openerAttribute='data-modal-opener'] - Attr. that contains a modal's name and will open that modal when clicked
+ * @param {string} [options.openAttribute='data-modal-open'] - Attr. that determines whether the modal is open or not.
+ * @param {string} [options.closeOnEscAttribute='data-close-on-esc'] - Attr. that determines whether the modal should close when the escape key is pressed. (Missing value is treated as true)
  */
 export function init(options = {}) {
   parseOptions(options);
@@ -70,33 +70,36 @@ export function closeAllModals() {
 
 /**
  * Toggles the modal's open attribute
- * @param  {object} $modal   jQuery element of the modal to be toggled
+ * @param  {object|string} modal   Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
  */
-export function toggleModal($modal, modalName) {
+export function toggleModal(modal) {
+  const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
   const isOpen = $modal.attr(openAttribute) === 'true';
   if (isOpen) {
-    closeModal($modal, modalName);
+    closeModal($modal);
   } else {
-    openModal($modal, modalName);
+    openModal($modal);
   }
 }
 
 /**
  * Sets the modal's open attribute to true
- * @param  {object} $modal   jQuery element of the modal to be toggled
+ * @param  {object|string} modal   Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
  */
-export function openModal($modal, modalName) {
-  const name = modalName || $modal.attr(containerAttribute);
+export function openModal(modal) {
+  const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
+  const name = $modal.attr(containerAttribute);
   $modal.attr(openAttribute, true);
   window.dispatchEvent(new CustomEvent('modal:opened', { detail: { $modal, name } }));
 }
 
 /**
  * Sets the modal's open attribute to false
- * @param  {object} $modal   jQuery element of the modal to be toggled
+ * @param  {object|string} modal   Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
  */
-export function closeModal($modal, modalName) {
-  const name = modalName || $modal.attr(containerAttribute);
+export function closeModal(modal) {
+  const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
+  const name = $modal.attr(containerAttribute);
   $modal.attr(openAttribute, false);
   window.dispatchEvent(new CustomEvent('modal:closed', { detail: { $modal, name } }));
 }
@@ -105,27 +108,27 @@ export function closeModal($modal, modalName) {
  * jQuery event handler that finds the name of the toggler's corresponding modal and toggles it
  */
 function togglerClick() {
-  const modalName = $(this).attr(togglerAttribute);
-  const $modal = $(`[${containerAttribute}="${modalName}"]`);
-  toggleModal($modal, modalName);
+  const name = $(this).attr(togglerAttribute);
+  const $modal = $(`[${containerAttribute}="${name}"]`);
+  toggleModal($modal, name);
 }
 
 /**
  * jQuery event handler that finds the name of the toggler's corresponding modal and opens it
  */
 function openerClick() {
-  const modalName = $(this).attr(openerAttribute);
-  const $modal = $(`[${containerAttribute}="${modalName}"]`);
-  openModal($modal, modalName);
+  const name = $(this).attr(openerAttribute);
+  const $modal = $(`[${containerAttribute}="${name}"]`);
+  openModal($modal, name);
 }
 
 /**
  * jQuery event handler that finds the name of the toggler's corresponding modal and closes it
  */
 function closerClick() {
-  const modalName = $(this).attr(closerAttribute);
-  const $modal = $(`[${containerAttribute}="${modalName}"]`);
-  closeModal($modal, modalName);
+  const name = $(this).attr(closerAttribute);
+  const $modal = $(`[${containerAttribute}="${name}"]`);
+  closeModal($modal, name);
 }
 
 /**

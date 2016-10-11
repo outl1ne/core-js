@@ -44,10 +44,17 @@ describe(`Modal`, function() {
     expect($modal.attr('data-modal-open')).toBe('false');
   });
 
-  it(`should open when openModal is called`, () => {
+  it(`should open when openModal is called with a jQuery element`, () => {
     const $modal = $('[data-modal="testmodal"]');
     expect($modal.attr('data-modal-open')).toBe('false');
     modals.openModal($modal);
+    expect($modal.attr('data-modal-open')).toBe('true');
+  });
+
+  it(`should open when openModal is called with a name`, () => {
+    const $modal = $('[data-modal="testmodal"]');
+    expect($modal.attr('data-modal-open')).toBe('false');
+    modals.openModal('testmodal');
     expect($modal.attr('data-modal-open')).toBe('true');
   });
 
