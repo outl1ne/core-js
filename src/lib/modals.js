@@ -25,15 +25,22 @@ let closerAttribute;
 let openerAttribute;
 let openAttribute;
 let closeOnEscAttribute;
+let disableGlobalClassAttribute;
+let $globalContainer;
+let reportOpenModals;
+
 /**
  * Starts listening to click and key events, adds initial attributes if missing
  * @param {object} [options={}]
+ * @param {boolean} [options.reportOpenModals=true] - Whether or not the global container should report whether a modal is open or not. You can use this to add overflow: hidden on body when modals are open.
+ * @param {string|object} [options.globalContainerSelector='html'] - Selector for the DOM element that will contain information about whether modals are open or not.
  * @param {string} [options.containerAttribute='data-modal'] - Attr. for the modal container that will contain the modal's name
  * @param {string} [options.togglerAttribute='data-modal-toggler'] - Attr. that contains a modal's name and will toggle that modal when clicked
  * @param {string} [options.closerAttribute='data-modal-closer'] - Attr. that contains a modal's name and will close that modal when clicked
  * @param {string} [options.openerAttribute='data-modal-opener'] - Attr. that contains a modal's name and will open that modal when clicked
  * @param {string} [options.openAttribute='data-modal-open'] - Attr. that determines whether the modal is open or not.
  * @param {string} [options.closeOnEscAttribute='data-close-on-esc'] - Attr. that determines whether the modal should close when the escape key is pressed. (Missing value is treated as true)
+ * @param {string} [options.disableGlobalClassAttribute='data-disable-global-class'] - Attr. that determines whether the global container should get a class indicating that the modal is open.
  */
 export function init(options = {}) {
   parseOptions(options);
@@ -51,12 +58,15 @@ export function init(options = {}) {
  * @param {object} [options]
  */
 function parseOptions(options) {
+  $globalContainer = $(options.globalContainerSelector || document.documentElement);
+  reportOpenModals = options.reportOpenModals || true;
   containerAttribute = options.containerAttribute || 'data-modal';
   togglerAttribute = options.togglerAttribute || 'data-modal-toggler';
   closerAttribute = options.closerAttribute || 'data-modal-closer';
   openerAttribute = options.openerAttribute || 'data-modal-opener';
   openAttribute = options.openAttribute || 'data-modal-open';
   closeOnEscAttribute = options.closeOnOutsideAttribute || 'data-close-on-esc';
+  disableGlobalClassAttribute = options.disableGlobalClassAttribute || 'data-disable-global-class';
 }
 
 /**
@@ -71,37 +81,55 @@ export function closeAllModals() {
 /**
  * Toggles the modal's open attribute
  * @param  {object|string} modal   Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
+ * @return {boolean}  Whether a modal was toggled or not. If no modal is found, false will be returned.
  */
 export function toggleModal(modal) {
   const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
   const isOpen = $modal.attr(openAttribute) === 'true';
   if (isOpen) {
-    closeModal($modal);
-  } else {
-    openModal($modal);
+    return closeModal($modal);
   }
+  return openModal($modal);
 }
 
-/**
- * Sets the modal's open attribute to true
- * @param  {object|string} modal   Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
- */
+ /**
+  * Sets the modal's open attribute to true
+  * @param  {object|string} modal   Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
+  * @return {boolean}  Whether a modal was opened or not. If no modal is found, false will be returned.
+  */
 export function openModal(modal) {
   const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
+
+  if (!$modal || $modal.length === 0) return false;
+
   const name = $modal.attr(containerAttribute);
+  const disableGlobalClassValue = $modal.attr(disableGlobalClassAttribute);
+  const shouldShowGlobalClass = typeof disableGlobalClassValue === 'undefined' || disableGlobalClassValue === 'false';
+
   $modal.attr(openAttribute, true);
+  if (shouldShowGlobalClass) $globalContainer.addClass(`modal-${getClassFriendlyName(name)}-open`);
   window.dispatchEvent(new CustomEvent('modal:opened', { detail: { $modal, name } }));
+
+  return true;
 }
 
 /**
  * Sets the modal's open attribute to false
  * @param  {object|string} modal   Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
+ * @return {boolean}  Whether a modal was opened or not. If no modal is found, false will be returned.
  */
 export function closeModal(modal) {
   const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
+
+  if (!$modal || $modal.length === 0) return false;
+
   const name = $modal.attr(containerAttribute);
+
   $modal.attr(openAttribute, false);
+  $globalContainer.removeClass(`modal-${getClassFriendlyName(name)}-open`);
   window.dispatchEvent(new CustomEvent('modal:closed', { detail: { $modal, name } }));
+
+  return true;
 }
 
 /**
@@ -151,4 +179,13 @@ function onKeyPress(evt) {
       closeModal($(this));
     });
   }
+}
+
+/**
+ * Classes can't have spaces in them, but modal names technically can, so we strip those spaces away when using them as part of a class
+ * @param  {string} name Original name
+ * @return {string}      Name that can be used as a class
+ */
+function getClassFriendlyName(name) {
+  return name.replace(/ /g, '');
 }
