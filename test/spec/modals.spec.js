@@ -76,7 +76,7 @@ describe(`Modal`, function() {
   });
 });
 
-describe(`Modal that doesn't want to show global class`, function() {
+describe(`Modal that doesn't want to show global class, and not report open modals globally`, function() {
 
   beforeEach(`Render needed DOM elements, initialize modals`, () => {
 
@@ -86,7 +86,7 @@ describe(`Modal that doesn't want to show global class`, function() {
       </div>
     `);
 
-    modals.init();
+    modals.init({ reportOpenModals: false });
   });
 
   it(`should not show the modal's open class on the global container`, () => {
@@ -97,6 +97,7 @@ describe(`Modal that doesn't want to show global class`, function() {
 
     modals.openModal('testmodal');
     expect($('html').hasClass('modal-testmodal-open')).toBe(false);
+    expect($('html').hasClass('modal-open')).toBe(false);
     expect($modal.attr('data-modal-open')).toBe('true');
 
     modals.closeModal('testmodal');
@@ -131,5 +132,39 @@ describe(`Modal that has a space in its name`, function() {
     modals.closeModal('test modal');
     expect($('html').hasClass('modal-testmodal-open')).toBe(false);
     expect($modal.attr('data-modal-open')).toBe('false');
+  });
+});
+
+describe(`Multiple modals`, function() {
+  beforeEach(`Render needed DOM elements, initialize modals`, () => {
+
+    renderToDom(`
+      <div data-modal="testmodal1">
+        <button data-modal-toggler="testmodal1"></button>
+      </div>
+
+      <div data-modal="testmodal2">
+        <button data-modal-toggler="testmodal2"></button>
+      </div>
+    `);
+
+    modals.init();
+  });
+
+  it(`should give "modal-open" class to html as long as any modal is open`, () => {
+    const $html = $('html');
+    expect($html.hasClass('modal-open')).toBe(false);
+    modals.openModal('testmodal1');
+    expect($html.hasClass('modal-open')).toBe(true);
+    modals.openModal('testmodal2');
+    expect($html.hasClass('modal-open')).toBe(true);
+    modals.closeModal('testmodal2');
+    expect($html.hasClass('modal-open')).toBe(true);
+    modals.closeModal('testmodal1');
+    expect($html.hasClass('modal-open')).toBe(false);
+    modals.toggleModal('testmodal2');
+    expect($html.hasClass('modal-open')).toBe(true);
+    modals.toggleModal('testmodal2');
+    expect($html.hasClass('modal-open')).toBe(false);
   });
 });

@@ -49,18 +49,18 @@ export function init(options = {}) {
 
 /**
  * Sets variables based on options object, or defaults. This should only be called from the constructor.
- * @param {object} [options]
+ * @param {object} [o] Options object (possible values documented in init())
  */
-function parseOptions(options) {
-  $globalContainer = $(options.globalContainerSelector || document.documentElement);
-  reportOpenModals = options.reportOpenModals || true;
-  containerAttribute = options.containerAttribute || 'data-modal';
-  togglerAttribute = options.togglerAttribute || 'data-modal-toggler';
-  closerAttribute = options.closerAttribute || 'data-modal-closer';
-  openerAttribute = options.openerAttribute || 'data-modal-opener';
-  openAttribute = options.openAttribute || 'data-modal-open';
-  closeOnEscAttribute = options.closeOnOutsideAttribute || 'data-close-on-esc';
-  disableGlobalClassAttribute = options.disableGlobalClassAttribute || 'data-disable-global-class';
+function parseOptions(o) {
+  $globalContainer = o.globalContainerSelector != null ? $(o.globalContainerSelector) : $(document.documentElement);
+  reportOpenModals = o.reportOpenModals != null ? o.reportOpenModals : true;
+  containerAttribute = o.containerAttribute != null ? o.containerAttribute : 'data-modal';
+  togglerAttribute = o.togglerAttribute != null ? o.togglerAttribute : 'data-modal-toggler';
+  closerAttribute = o.closerAttribute != null ? o.closerAttribute : 'data-modal-closer';
+  openerAttribute = o.openerAttribute != null ? o.openerAttribute : 'data-modal-opener';
+  openAttribute = o.openAttribute != null ? o.openAttribute : 'data-modal-open';
+  closeOnEscAttribute = o.closeOnOutsideAttribute != null ? o.closeOnOutsideAttribute : 'data-close-on-esc';
+  disableGlobalClassAttribute = o.disableGlobalClassAttribute != null ? o.disableGlobalClassAttribute : 'data-disable-global-class'; // eslint-disable-line max-len
 }
 
 /**
@@ -102,6 +102,7 @@ export function openModal(modal) {
 
   $modal.attr(openAttribute, true);
   if (shouldShowGlobalClass) $globalContainer.addClass(`modal-${getClassFriendlyName(name)}-open`);
+  if (reportOpenModals) $globalContainer.addClass(`modal-open`);
   window.dispatchEvent(new CustomEvent('modal:opened', { detail: { $modal, name } }));
 
   return true;
@@ -121,9 +122,17 @@ export function closeModal(modal) {
 
   $modal.attr(openAttribute, false);
   $globalContainer.removeClass(`modal-${getClassFriendlyName(name)}-open`);
+  if (reportOpenModals && !isAnyModalOpen()) $globalContainer.removeClass(`modal-open`);
   window.dispatchEvent(new CustomEvent('modal:closed', { detail: { $modal, name } }));
 
   return true;
+}
+
+/**
+ * @return {Boolean} True if any modal is currently open. If none of the modals are open, false.
+ */
+export function isAnyModalOpen() {
+  return $(`[${openAttribute}="true"]`).length > 0;
 }
 
 /**
