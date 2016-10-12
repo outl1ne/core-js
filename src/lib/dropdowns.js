@@ -3,20 +3,13 @@
  * Uses data attributes to suggest whether a dropdown should be open or closed.
  * NOTE: This doesn't change any visual style itself. You have to use CSS
  * to implement the hiding of the dropdown. A basic version of this is
- * implemented in the `.basic-dropdown` class (_basic-dropdown.scss)
+ * implemented in the `.basic-dropdown` class (_basic-dropdown.scss).
+ * Examples of usage can be seen in tests or readme.md
  *
  * Extra behaviour:
  * - If the user clicks outside of the dropdown, it closes automatically if data-close-on-outside-click is true.
  * - The dropdown content is kept in viewport automatically if the `data-keep-in-view` attribute is present.
  *
- * Example of usage:
- *
- * <div data-dropdown-open="false" data-keep-in-view data-close-on-outside-click class="basic-dropdown">
- *   <button data-dropdown-toggler class="btn-toggle-dropdown">Toggle dropdown</button>
- *   <div data-dropdown class="dropdown-content">
- *     Dropdown content!
- *   </div>
- * </div>
  * @module lib/dropdowns
  */
 

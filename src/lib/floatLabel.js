@@ -3,11 +3,8 @@
  * This code is meant to accompany float labels code (should be found in styles/components/_float-label.scss)
  * It adds a `has-text` class to any input that has text in it, so we can style the labels accordingly
  * NOTE: Prefilled password fields will not float until the user interacts with the page.
+ * Examples of usage can be seen in tests or readme.md
  *
- * Example of usage:
- * <label class="input-field">
- *   <input type="text">
- * </label>
  * @module lib/floatLabel
  */
 

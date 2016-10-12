@@ -2,19 +2,13 @@
  * MODALS:
  * Allows you to control whether an element should be shown by clicking buttons with a corresponding data attribute.
  * NOTE: This doesn't change any visual style itself. You have to use CSS to change the element's visibility.
+ * Examples of usage can be seen in tests or readme.md
  *
  * Functionality:
  * - When the user presses escape, all modals will be closed (unless they have data-close-on-esc="false")
  * - Custom events get dispatched when a modal is opened/closed:
  *   window.addEventListener('modal:opened', (evt) => { console.log(evt.detail.$modal, evt.detail.name) }
  *   window.addEventListener('modal:closed', (evt) => { console.log(evt.detail.$modal, evt.detail.name) }
- *
- * Example of usage:
- *  <button data-modal-toggler="demo-modal">Click to toggle modal</button>
- *  <div data-modal="demo-modal" data-modal-open="false" class="basic-modal">
- *    <p>Modal content</p>
- *    <button data-modal-closer="demo-modal">Click to close modal</button>
- *  </div>
  *
  * @module lib/modals
  */
