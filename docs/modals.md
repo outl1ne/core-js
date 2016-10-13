@@ -92,7 +92,7 @@ Sets the modal's open attribute to false
 **Returns**: `boolean`, Whether a modal was opened or not. If no modal is found, false will be returned.
 
 
-### lib&#x2F;modals.isModalOpen(Name) 
+### lib&#x2F;modals.isModalOpen(modal) 
 
 MODALS:
 Allows you to control whether an element should be shown by clicking buttons with a corresponding data attribute.
@@ -107,7 +107,7 @@ Functionality:
 
 **Parameters**
 
-**Name**: `object | string`, or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
+**modal**: `object | string`, Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
 
 **Returns**: `Boolean`, Whether the modal is open or not
 

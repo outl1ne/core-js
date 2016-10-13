@@ -135,7 +135,7 @@ export function closeModal(modal) {
 }
 
 /**
- * @param  {object|string}  Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
+ * @param  {object|string} modal Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
  * @return {Boolean}  Whether the modal is open or not
  */
 export function isModalOpen(modal) {
