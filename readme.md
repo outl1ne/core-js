@@ -1,8 +1,12 @@
-# Optimist Digital | Core JS
-
 This is a collection of JS functionalities that we commonly need to use. Documentation for each module can be found in the docs folder, or source code.
 
 We assume that $ is a globally accessible alias for jQuery.
+
+
+# Modals
+
+Modals can be used with only data attributes, but there is a JavaScript API to interact with the modals.
+Note: We don't add any styles to the modals. You should use the data-modal-open attribute to toggle visibility with CSS.
 
 ## Example
 
@@ -32,11 +36,6 @@ window.addEventListener('modal:opened', evt => console.log(evt.detail.name));
 modals.openModal('checkout-modal'); // Logs "checkout-modal"
 modals.closeModal($('[data-modal="checkout-modal"]')); // Passing in jquery object instead of modal name works too
 ```
-
-## Modals
-
-Modals can be used with only data attributes, but there is a JavaScript API to interact with the modals.
-Note: We don't add any styles to the modals. You should use the data-modal-open attribute to toggle visibility with CSS.
 
 #### Data attributes (the names for these can be configured)
 
