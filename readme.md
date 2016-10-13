@@ -4,15 +4,9 @@ This is a collection of JS functionalities that we commonly need to use. Documen
 
 We assume that $ is a globally accessible alias for jQuery.
 
-```
-import { modals } from '@optimistdigital/core-js';
-modals.init();
-modals.closeAllModals();
-```
+## Example
 
-### Example
-
-** HTML **
+#### HTML
 ```
 <button data-modal-opener="checkout-modal"></button>
 
@@ -27,15 +21,15 @@ modals.closeAllModals();
 </style>
 ```
 
-** JavaScript **
+#### JavaScript
 
 ```
 import { modals } from '@optimistdigital/core-js';
 
 modals.init();
-window.addEventListener('modal:opened', evt => console.log(evt.detail));
+window.addEventListener('modal:opened', evt => console.log(evt.detail.name));
 
-modals.openModal('checkout-modal'); // Logs `{type: "modal:opened", $modal: jQuery.fn.init[1], name: "checkout-modal"}`
+modals.openModal('checkout-modal'); // Logs "checkout-modal"
 modals.closeModal($('[data-modal="checkout-modal"]')); // Passing in jquery object instead of modal name works too
 ```
 
@@ -44,7 +38,7 @@ modals.closeModal($('[data-modal="checkout-modal"]')); // Passing in jquery obje
 Modals can be used with only data attributes, but there is a JavaScript API to interact with the modals.
 Note: We don't add any styles to the modals. You should use the data-modal-open attribute to toggle visibility with CSS.
 
-### Data attributes (the names for these can be configured)
+#### Data attributes (the names for these can be configured)
 
 |Attribute|Description|
 |---|---|
@@ -54,7 +48,7 @@ Note: We don't add any styles to the modals. You should use the data-modal-open 
 |data-close-on-esc="true"|Whether or not pressing escape should close the modal. True by default.|
 |data-disable-global-class|By default, open modals get a corresponding `modal-modalname-open` class on the global container (html element by default). This disables that behaviour|
 
-### JavaScript API ###
+#### JavaScript API
 
 More thorough documentation is in the docs folder
 
@@ -66,6 +60,13 @@ More thorough documentation is in the docs folder
 |toggleModal(modal)|Toggles the modal|
 |closeAllModals()|Closes all currently open modals|
 |isAnyModalOpen()|Returns true if any modal is currently open|
+
+#### Events
+
+|Event|event.detail|Description|
+|---|---|---|
+|window.addEventListener('modal:closed', cb)|`{type: "modal:opened", $modal: jQuery.fn.init[1], name: "modal-name"}`|Dispatched when a modal is closed. Not dispatched when trying to open a modal that's already open.|
+|window.addEventListener('modal:opened', cb)|{`type: "modal:closed", $modal: jQuery.fn.init[1], name: "modal-name"}`|Dispatched when a modal is opened. Not dispatched when trying to close a modal that's already closed.|
 
 ## Testing
 
