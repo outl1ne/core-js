@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>deviceInfo.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_deviceInfo.html">lib/deviceInfo</a><ul class='methods'><li data-type='method'><a href="module-lib_deviceInfo.html#.getViewportWidth">getViewportWidth</a></li><li data-type='method'><a href="module-lib_deviceInfo.html#.init">init</a></li><li data-type='method'><a href="module-lib_deviceInfo.html#.isTouchDevice">isTouchDevice</a></li><li data-type='method'><a href="module-lib_deviceInfo.html#~onResize">onResize</a></li></ul></li><li><a href="module-lib_dropdowns.html">lib/dropdowns</a><ul class='methods'><li data-type='method'><a href="module-lib_dropdowns.html#.closeDropdowns">closeDropdowns</a></li><li data-type='method'><a href="module-lib_dropdowns.html#.init">init</a></li><li data-type='method'><a href="module-lib_dropdowns.html#.keepInViewport">keepInViewport</a></li><li data-type='method'><a href="module-lib_dropdowns.html#~parseOptions">parseOptions</a></li><li data-type='method'><a href="module-lib_dropdowns.html#~toggleDropdown">toggleDropdown</a></li></ul></li><li><a href="module-lib_floatLabel.html">lib/floatLabel</a><ul class='methods'><li data-type='method'><a href="module-lib_floatLabel.html#.init">init</a></li><li data-type='method'><a href="module-lib_floatLabel.html#~evaluateAllFields">evaluateAllFields</a></li><li data-type='method'><a href="module-lib_floatLabel.html#~evaluateContent">evaluateContent</a></li><li data-type='method'><a href="module-lib_floatLabel.html#~parseOptions">parseOptions</a></li></ul></li><li><a href="module-lib_modals.html">lib/modals</a><ul class='methods'><li data-type='method'><a href="module-lib_modals.html#.closeAllModals">closeAllModals</a></li><li data-type='method'><a href="module-lib_modals.html#.closeModal">closeModal</a></li><li data-type='method'><a href="module-lib_modals.html#.init">init</a></li><li data-type='method'><a href="module-lib_modals.html#.isAnyModalOpen">isAnyModalOpen</a></li><li data-type='method'><a href="module-lib_modals.html#.openModal">openModal</a></li><li data-type='method'><a href="module-lib_modals.html#.toggleModal">toggleModal</a></li><li data-type='method'><a href="module-lib_modals.html#~closerClick">closerClick</a></li><li data-type='method'><a href="module-lib_modals.html#~getClassFriendlyName">getClassFriendlyName</a></li><li data-type='method'><a href="module-lib_modals.html#~initializeOpenAttributes">initializeOpenAttributes</a></li><li data-type='method'><a href="module-lib_modals.html#~openerClick">openerClick</a></li><li data-type='method'><a href="module-lib_modals.html#~parseOptions">parseOptions</a></li><li data-type='method'><a href="module-lib_modals.html#~togglerClick">togglerClick</a></li></ul></li><li><a href="module-lib_optimizedEvents.html">lib/optimizedEvents</a></li><li><a href="module-lib_smoothScroll.html">lib/smoothScroll</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">deviceInfo.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * DEVICE INFO:
+ * This module provides information about the device (OS, browser, etc)
+ * @module lib/deviceInfo
+ */
+let _cacheViewport; // Whether you want to automatically cache the viewport to prevent redraws
+let _isTouchDevice = null;
+let _viewportWidth;
+
+/**
+ * Immediately caches the values, instead of waiting for them to be asked for.
+ * Also adds corresponding classes to the html element
+ * @param {object} [options]
+ * @param {boolean} [options.cacheViewport] - Whether the viewport dimensions should be cached automatically on resize.
+ */
+export function init(options = {}) {
+  _cacheViewport = options.cacheViewport || false;
+  onResize();
+  const $html = $('html');
+  const touchDevice = isTouchDevice();
+
+  if (touchDevice) {
+    $html.addClass('touch-device');
+  }
+
+  if (options.cacheViewport) {
+    onResize();
+    window.addEventListener('optimizedResize', onResize);
+  }
+}
+
+/**
+ * Returns the width of the viewport.
+ * @return {number} Cached viewport width
+ */
+export function getViewportWidth() {
+  return _cacheViewport ? (_viewportWidth || $(window).width()) : $(window).width();
+}
+
+/**
+ * Detects if the device has touch capabilities.
+ * NOTE: This does not mean that it doesn't have other capabilities (like mouse),
+ * for example laptops with an optional touch screen
+* @return {boolean} If the device has touch capabilities
+ */
+export function isTouchDevice() {
+  if (_isTouchDevice) {
+    return _isTouchDevice;
+  }
+
+  if (typeof navigator === 'undefined') {
+    return false;
+  }
+
+  return (_isTouchDevice = (('ontouchstart' in window)
+    || (navigator.maxTouchPoints > 0)
+    || (navigator.msMaxTouchPoints > 0)));
+}
+
+/**
+ * Called by the window resize event, updates viewport information
+ */
+function onResize() {
+  _viewportWidth = $(window).width();
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.1</a> on Thu Oct 13 2016 12:10:54 GMT+0300 (EEST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
