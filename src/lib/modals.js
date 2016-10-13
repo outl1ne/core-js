@@ -78,7 +78,7 @@ export function closeAllModals() {
  * @return {boolean}  Whether a modal was toggled or not. If no modal is found, false will be returned.
  */
 export function toggleModal(modal) {
-  const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
+  const $modal = getJQueryObject(modal);
   const isOpen = $modal.attr(openAttribute) === 'true';
   if (isOpen) {
     return closeModal($modal);
@@ -92,7 +92,7 @@ export function toggleModal(modal) {
   * @return {boolean}  Whether a modal was opened or not. If no modal is found, false will be returned.
   */
 export function openModal(modal) {
-  const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
+  const $modal = getJQueryObject(modal);
 
   if (!$modal || $modal.length === 0 || isModalOpen($modal)) return false;
 
@@ -117,7 +117,7 @@ export function openModal(modal) {
  * @return {boolean}  Whether a modal was opened or not. If no modal is found, false will be returned.
  */
 export function closeModal(modal) {
-  const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
+  const $modal = getJQueryObject(modal);
 
   if (!$modal || $modal.length === 0 || !isModalOpen($modal)) return false;
 
@@ -135,11 +135,11 @@ export function closeModal(modal) {
 }
 
 /**
- * @param  {[type]}  Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
+ * @param  {object|string}  Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
  * @return {Boolean}  Whether the modal is open or not
  */
 export function isModalOpen(modal) {
-  const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
+  const $modal = getJQueryObject(modal);
   return $modal.attr(openAttribute) === 'true';
 }
 
@@ -197,6 +197,15 @@ function onKeyPress(evt) {
       closeModal($(this));
     });
   }
+}
+
+/**
+ * Helper function to normalize the modal to a jQuery object, so the user can enter either the modal's name or jQuery object.
+ * @param  {object|string} modal Modal's name, or jQuery object
+ * @return {object}       jQuery object representing the modal
+ */
+function getJQueryObject(modal) {
+  return typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
 }
 
 /**
