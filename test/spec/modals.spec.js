@@ -74,6 +74,20 @@ describe(`Modal`, function() {
     $wrongToggler.click();
     expect($modal.attr('data-modal-open')).toBe('false');
   });
+
+  it(`should dispatch modal:opened/modal:closed, but only when it's not already open`, () => {
+    const openSpy = expect.createSpy();
+    const closeSpy = expect.createSpy();
+
+    window.addEventListener('modal:opened', openSpy);
+    window.addEventListener('modal:closed', closeSpy);
+    modals.openModal('testmodal');
+    modals.openModal('testmodal');
+    modals.closeModal('testmodal');
+    modals.closeModal('testmodal');
+    expect(openSpy.calls.length).toBe(1);
+    expect(closeSpy.calls.length).toBe(1);
+  });
 });
 
 describe(`Modal that doesn't want to show global class, and not report open modals globally`, function() {

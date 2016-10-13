@@ -59,6 +59,7 @@ More thorough documentation is in the docs folder
 |toggleModal(modal)|Toggles the modal|
 |closeAllModals()|Closes all currently open modals|
 |isAnyModalOpen()|Returns true if any modal is currently open|
+|isModalOpen(modal)|Returns true if the modal is open|
 
 #### Events
 

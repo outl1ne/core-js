@@ -94,7 +94,7 @@ export function toggleModal(modal) {
 export function openModal(modal) {
   const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
 
-  if (!$modal || $modal.length === 0) return false;
+  if (!$modal || $modal.length === 0 || isModalOpen($modal)) return false;
 
   const name = $modal.attr(containerAttribute);
   const disableGlobalClassValue = $modal.attr(disableGlobalClassAttribute);
@@ -119,7 +119,7 @@ export function openModal(modal) {
 export function closeModal(modal) {
   const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
 
-  if (!$modal || $modal.length === 0) return false;
+  if (!$modal || $modal.length === 0 || !isModalOpen($modal)) return false;
 
   const name = $modal.attr(containerAttribute);
 
@@ -132,6 +132,15 @@ export function closeModal(modal) {
   } }));
 
   return true;
+}
+
+/**
+ * @param  {[type]}  Name or jQuery element of the modal to be toggled. If the argument is a string, it will be interpreted as the modal's name. Otherwise, it will be interpreted as a jQuery element
+ * @return {Boolean}  Whether the modal is open or not
+ */
+export function isModalOpen(modal) {
+  const $modal = typeof modal === 'string' ? $(`[${containerAttribute}="${modal}"]`) : modal;
+  return $modal.attr(openAttribute) === 'true';
 }
 
 /**
@@ -177,7 +186,7 @@ function initializeOpenAttributes() {
   $modals.each(function initializeModalIterator() {
     const $modal = $(this);
     if ($modal.attr(openAttribute) !== 'true') {
-      closeModal($modal);
+      $modal.attr(openAttribute, false);
     }
   });
 }
