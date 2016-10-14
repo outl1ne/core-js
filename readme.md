@@ -15,7 +15,7 @@ Note: We don't add any styles to the modals. You should use the data-modal-open 
 <button data-modal-opener="checkout-modal"></button>
 
 <div data-modal="checkout-modal">
-  <button data-modal-closer="testmodal"></button>
+  <button data-modal-closer="checkout-modal"></button>
   <div>Content here!</div>
 </div>
 
