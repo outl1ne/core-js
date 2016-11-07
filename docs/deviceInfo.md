@@ -37,6 +37,30 @@ for example laptops with an optional touch screen
 **Returns**: `boolean`, If the device has touch capabilities
 
 
+### lib&#x2F;deviceInfo.isMobile() 
+
+Returns true if the device is a mobile device
+
+
+
+### lib&#x2F;deviceInfo.isIpad() 
+
+Returns true if the device is an iPad
+
+
+
+### lib&#x2F;deviceInfo.isAndroid() 
+
+Returns true if the device is using Android
+
+
+
+### lib&#x2F;deviceInfo.isChromeiOS() 
+
+Returns true if the device is using Chrome on iOS
+
+
+
 ### lib&#x2F;deviceInfo.onResize() 
 
 Called by the window resize event, updates viewport information
