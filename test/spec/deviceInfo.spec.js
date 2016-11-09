@@ -20,6 +20,10 @@ describe(`Device info`, function() {
     expect(deviceInfo.isTouchDevice()).toBe(false);
   });
 
+  it(`should not think we are LTE IE9`, () => {
+    expect(deviceInfo.isIE()).toBe(false);
+  });
+
   afterEach(`Restore mocked variables`, () => {
     document.body.className = '';
     document.documentElement.clientWidth = this.clientWidth;
