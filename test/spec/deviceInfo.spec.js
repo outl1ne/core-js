@@ -22,6 +22,7 @@ describe(`Device info`, function() {
 
   it(`should not think we are LTE IE9`, () => {
     expect(deviceInfo.isIE()).toBe(false);
+    expect(deviceInfo.isIE()).toBe(false);
   });
 
   afterEach(`Restore mocked variables`, () => {
@@ -64,7 +65,7 @@ describe(`Device info with viewport size caching + navigator with touch events`,
   });
 
   it(`should think we are a touch device`, () => {
-    expect(deviceInfo.isTouchDevice()).toBe(true);
-    expect($('html').hasClass('touch-device')).toBe(true);
+    expect(deviceInfo.isTouchDevice()).toBe(true, 'Expected touch device to be true');
+    expect($('html').hasClass('touch-device')).toBe(true, 'Expected html to have `touch-device` class');
   });
 });

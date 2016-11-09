@@ -3,7 +3,7 @@
  * This module provides information about the device (OS, browser, etc)
  * @module lib/deviceInfo
  */
-let userAgent;
+const userAgent = window.navigator ? (window.navigator.userAgent || '') : '';
 let _cacheViewport; // Whether you want to automatically cache the viewport to prevent redraws
 let _isTouchDevice;
 let _viewportWidth;
@@ -19,13 +19,12 @@ let _isChromeiOS;
  * @param {boolean} [options.cacheViewport] - Whether the viewport dimensions should be cached automatically on resize.
  */
 export function init(options = {}) {
-  initVariables(options);
+  parseConfig(options);
   onResize();
-  const $html = $('html');
   const touchDevice = isTouchDevice();
 
   if (touchDevice) {
-    $html.addClass('touch-device');
+    $('html').addClass('touch-device');
   }
 
   if (options.cacheViewport) {
@@ -129,8 +128,7 @@ function onResize() {
   _viewportWidth = $(window).width();
 }
 
-function initVariables(options) {
-  userAgent = window.navigator ? (window.navigator.userAgent || '') : '';
+function parseConfig(options) {
   _cacheViewport = options.cacheViewport || false;
   _isTouchDevice = null;
   _viewportWidth = null;
