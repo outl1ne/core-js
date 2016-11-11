@@ -6,10 +6,10 @@
   "scripts": {
     "build": "npm run clean; babel --presets es2015,stage-0 -d dist src",
     "clean": "rm -r dist/* 2> /dev/null; exit 0",
-    "jsdoc": "rm -r docs/* 2> /dev/null; jsdoc -R readme.md -t node_modules/minami -r ./src -d ./docs",
-    "jsdox": "rm -r docs/* 2> /dev/null; jsdox -r --output ./docs ./src",
+    "jsdoc": "rm -r jsdoc/* 2> /dev/null; jsdoc -R readme.md -t node_modules/minami -r ./src -d ./jsdoc",
+    "jsdox": "rm -r jsdox/* 2> /dev/null; jsdox -r --output ./jsdox ./src",
     "lint": "eslint -c .eslintrc src; exit 0",
-    "prepublish": "npm run jsdox && npm run build",
+    "prepublish": "npm run build",
     "test": "npm run build && mocha \"test/**/*.spec.js\"",
     "coverage": "npm run build && istanbul cover node_modules/.bin/_mocha -- 'test/**/*.spec.js'"
   },

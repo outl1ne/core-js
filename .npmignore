@@ -4,3 +4,4 @@ test
 .eslintrc
 .editorconfig
 coverage
+npm-debug.log
