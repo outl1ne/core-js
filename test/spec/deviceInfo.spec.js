@@ -1,19 +1,51 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 import expect from 'expect';
-import { deviceInfo } from '../../dist/index';
+import { deviceInfo, optimizedEvents } from '../../dist/index';
+
+const mockedWidth = 800;
+const mockedHeight = 600;
+
+optimizedEvents.init({ reportViewportSize: true });
 
 describe(`Device info`, function() {
-  const mockedWidth = 800;
 
   beforeEach(`Init module, mock clientWidth`, () => {
     this.clientWidth = document.documentElement.clientWidth;
     document.documentElement.clientWidth = mockedWidth;
+    this.clientHeight = document.documentElement.clientHeight;
+    document.documentElement.clientHeight = mockedHeight;
 
     deviceInfo.init();
   });
 
-  it(`should give the viewport width`, () => {
+  it(`should give the viewport width and height`, () => {
     expect(deviceInfo.getViewportWidth()).toBe(mockedWidth);
+    expect(deviceInfo.getViewportHeight()).toBe(mockedHeight);
+  });
+
+  it(`should not dispatch optimizedResize twice in a row`, function(done) {
+    const resizeSpy = expect.createSpy();
+
+    window.addEventListener('optimizedResize', evt => {
+      expect(evt.detail.width).toBe(800);
+      expect(evt.detail.height).toBe(600);
+      resizeSpy();
+    });
+    window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event('resize'));
+
+    setTimeout(() => {
+      expect(resizeSpy.calls.length).toBe(1);
+      done();
+    }, 50)
+  });
+
+  it(`should dispatch optimizedResize when orientation changes`, () => {
+    const resizeSpy = expect.createSpy();
+
+    window.addEventListener('optimizedResize', resizeSpy);
+    window.dispatchEvent(new Event('orientationchange'))
+    expect(resizeSpy).toHaveBeenCalled();
   });
 
   it(`should not think we are a touch device`, () => {
@@ -28,6 +60,7 @@ describe(`Device info`, function() {
   afterEach(`Restore mocked variables`, () => {
     document.body.className = '';
     document.documentElement.clientWidth = this.clientWidth;
+    document.documentElement.clientHeight = this.clientHeight;
   });
 });
 
@@ -47,11 +80,13 @@ describe(`Touch device check with undefined navigator`, function() {
 });
 
 describe(`Device info with viewport size caching + navigator with touch events`, function() {
-  const mockedWidth = 800;
 
   beforeEach(`Init module, mock clientWidth`, () => {
     this.clientWidth = document.documentElement.clientWidth;
     document.documentElement.clientWidth = mockedWidth;
+    this.clientHeight = document.documentElement.clientHeight;
+    document.documentElement.clientHeight = mockedHeight;
+
     global.navigator = { maxTouchPoints: 20 };
 
     deviceInfo.init({ cacheViewport: true });
@@ -67,5 +102,11 @@ describe(`Device info with viewport size caching + navigator with touch events`,
   it(`should think we are a touch device`, () => {
     expect(deviceInfo.isTouchDevice()).toBe(true, 'Expected touch device to be true');
     expect($('html').hasClass('touch-device')).toBe(true, 'Expected html to have `touch-device` class');
+  });
+
+  afterEach(`Restore mocked variables`, () => {
+    document.body.className = '';
+    document.documentElement.clientWidth = this.clientWidth;
+    document.documentElement.clientHeight = this.clientHeight;
   });
 });

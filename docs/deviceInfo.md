@@ -1,81 +1,24 @@
-# lib&#x2F;deviceInfo
+# Device info
 
-DEVICE INFO:
-This module provides information about the device (OS, browser, etc)
+A collection of functions to request information about the device.
+We try to cache the values so any logic doesn't have to be run more than needed.
 
+#### API
 
+|Function|Description|
+|---|---|
+|init(options)|Initializes device info logic. This should only be called once.|
+|getViewportWidth|Returns the viewport width using jQuery's $(window).width() function. If the `cacheViewport` option is true, the values will be cached on resize, so calling will not cause additional unnecessary reflows.|
+|getViewportHeight|Returns the viewport height (same logic as getViewportWidth)|
+|isTouchDevice|Returns true if the device has touch capabilities. NOTE: This doesn't mean that the device doesn't have a mouse pointer. I.e laptops with touchscreens might still return true.|
+|isMobile|Looks at the userAgent to see if the device is likely a mobile device|
+|isIpad|Looks at the userAgent to see if the device is likely an iPad|
+|isAndroid|Looks at the userAgent to see if the device is likely using Android|
+|isChromeiOS|Looks at the userAgent to see if the device is likely using Chrome on iOS|
+|isIE|Looks at the userAgent to see if the browser is IE. Returns "false" if not IE. If the browser is IE, it will return an integer representing the version of IE.|
 
-* * *
+#### Options
 
-### lib&#x2F;deviceInfo.init(options) 
-
-Immediately caches the values, instead of waiting for them to be asked for.
-Also adds corresponding classes to the html element
-
-**Parameters**
-
-**options**: `object`, Immediately caches the values, instead of waiting for them to be asked for.
-Also adds corresponding classes to the html element
-
- - **options.cacheViewport**: `boolean`, Whether the viewport dimensions should be cached automatically on resize.
-
-
-
-### lib&#x2F;deviceInfo.getViewportWidth() 
-
-Returns the width of the viewport.
-
-**Returns**: `number`, Cached viewport width
-
-
-### lib&#x2F;deviceInfo.isTouchDevice() 
-
-Detects if the device has touch capabilities.
-NOTE: This does not mean that it doesn't have other capabilities (like mouse),
-for example laptops with an optional touch screen
-
-**Returns**: `boolean`, If the device has touch capabilities
-
-
-### lib&#x2F;deviceInfo.isMobile() 
-
-Returns true if the device is a mobile device
-
-
-
-### lib&#x2F;deviceInfo.isIpad() 
-
-Returns true if the device is an iPad
-
-
-
-### lib&#x2F;deviceInfo.isAndroid() 
-
-Returns true if the device is using Android
-
-
-
-### lib&#x2F;deviceInfo.isChromeiOS() 
-
-Returns true if the device is using Chrome on iOS
-
-
-
-### lib&#x2F;deviceInfo.onResize() 
-
-Called by the window resize event, updates viewport information
-
-
-
-
-* * *
-
-
-
-
-
-
-
-
-
-
+|Option|Default|Description|
+|---|---|---|
+|cacheViewport|false|If set to true, viewport size will automatically be recorded whenever there is a resize, to be used with getViewportWidth/getViewportHeight. Turn this on if you need to ask for the viewport size at random points in your app. Turn it off if you never need to do this. |
