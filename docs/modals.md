@@ -29,20 +29,20 @@ modals.init();
 window.addEventListener('modal:opened', evt => console.log(evt.detail.name));
 
 modals.openModal('checkout-modal'); // Logs "checkout-modal"
-modals.closeModal($('[data-modal="checkout-modal"]')); // Passing in jquery object instead of modal name works too
+modals.closeModal($('[data-modal="checkout-modal"]')); // Passing in jquery object works too
 ```
 
-#### Data attributes (the names for these can be configured)
+## Data attributes (the names for these can be configured)
 
 |Attribute|Description|
 |---|---|
-|data-modal="modal name"|Modal's name. Place this in the modal's container element.|
-|data-modal-[toggler/opener/closer]="modal name"|Toggles/opens/closes the corresponding modal when clicked. These can be placed anywhere in the DOM|
-|data-modal-open=["true"/"false"]|Exists on the same element as data-modal. Says whether the modal is open or not. You can set this to true by default. If not present, we automatically set this to false.|
+|data-modal="modal name"|Modal's name. This will be the modal's container.|
+|data-modal-[toggler/opener/closer]="modal name"|Toggles/opens/closes the modal when clicked. Can be placed anywhere in the DOM|
+|data-modal-open=["true"/"false"]|Gets automatically placed on the modal's container. Keeps track of whether the modal is open or not. Defaults to false.|
 |data-close-on-esc="true"|Whether or not pressing escape should close the modal. True by default.|
 |data-disable-global-class|By default, open modals get a corresponding `modal-modalname-open` class on the global container (html element by default). This disables that behaviour|
 
-#### JavaScript API
+## JavaScript API
 
 |Function|Description|
 |---|---|
@@ -54,14 +54,14 @@ modals.closeModal($('[data-modal="checkout-modal"]')); // Passing in jquery obje
 |isAnyModalOpen()|Returns true if any modal is currently open|
 |isModalOpen(modal)|Returns true if the modal is open|
 
-#### Events
+## Events
 
 |Event|event.detail|Description|
 |---|---|---|
-|window.addEventListener('modal:closed', cb)|`{type: "modal:opened", $modal: jQuery.fn.init[1], name: "modal-name"}`|Dispatched when a modal is closed. Not dispatched when trying to open a modal that's already open.|
-|window.addEventListener('modal:opened', cb)|{`type: "modal:closed", $modal: jQuery.fn.init[1], name: "modal-name"}`|Dispatched when a modal is opened. Not dispatched when trying to close a modal that's already closed.|
+|window.addEventListener('modal:closed', cb)|`{type: "modal:opened", $modal: jQuery.fn.init[1], name: "modal-name"}`|Dispatched when a modal changes from open to closed|
+|window.addEventListener('modal:opened', cb)|{`type: "modal:closed", $modal: jQuery.fn.init[1], name: "modal-name"}`|Dispatched when a modal changes from closed to open|
 
-#### Options
+## Options
 
 Most of these are just for customizing the data attributes that you will be use, and can probably left default
 
