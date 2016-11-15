@@ -32,7 +32,7 @@ modals.openModal('checkout-modal'); // Logs "checkout-modal"
 modals.closeModal($('[data-modal="checkout-modal"]')); // Passing in jquery object works too
 ```
 
-## Data attributes (the names for these can be configured)
+## Data attributes
 
 |Attribute|Description|
 |---|---|
