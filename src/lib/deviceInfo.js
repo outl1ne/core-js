@@ -3,6 +3,9 @@
  * This module provides information about the device (OS, browser, etc)
  * @module lib/deviceInfo
  */
+
+import $ from 'jquery';
+
 const userAgent = window.navigator ? (window.navigator.userAgent || '') : '';
 let _cacheViewport; // Whether you want to automatically cache the viewport to prevent redraws
 let _isTouchDevice;

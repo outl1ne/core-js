@@ -13,6 +13,7 @@
  * @module lib/dropdowns
  */
 
+import $ from 'jquery';
 import { getViewportWidth } from './deviceInfo';
 
 let togglerAttribute;

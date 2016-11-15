@@ -5,6 +5,9 @@
  * @param  {number} time   The time in milliseconds that it should take for the animation to complete
  * @module lib/smoothScroll
  */
+
+import $ from 'jquery';
+
 export function initSmoothScrollToAnchor(time = 500) {
   $('a[href*="#"]:not([href="#"])').click(function smoothScrollToAnchor() {
     if (window.location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '')

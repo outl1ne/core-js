@@ -42,5 +42,8 @@
     "jsdom-global": "^2.1.0",
     "minami": "^1.1.1",
     "mocha": "^3.0.2"
+  },
+  "peerDependencies": {
+    "jquery": "*"
   }
 }

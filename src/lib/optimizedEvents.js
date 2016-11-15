@@ -7,6 +7,8 @@
  * @module lib/optimizedEvents
  */
 
+import $ from 'jquery';
+
 export function init(opts = {}) {
   /* Add throttled events */
   throttle('resize', 'optimizedResize', opts.reportViewportSize === true && getViewportDetail);

@@ -13,6 +13,8 @@
  * @module lib/modals
  */
 
+import $ from 'jquery';
+
 let containerAttribute;
 let togglerAttribute;
 let closerAttribute;

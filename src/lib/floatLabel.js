@@ -8,6 +8,8 @@
  * @module lib/floatLabel
  */
 
+import $ from 'jquery';
+
 let inputFieldSelector;
 let hasTextClass;
 let $inputFields;
