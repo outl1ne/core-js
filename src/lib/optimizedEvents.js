@@ -7,7 +7,7 @@
  * @module lib/optimizedEvents
  */
 
-export function init(opts) {
+export function init(opts = {}) {
   /* Add throttled events */
   throttle('resize', 'optimizedResize', opts.reportViewportSize === true && getViewportDetail);
   throttle('scroll', 'optimizedScroll');
