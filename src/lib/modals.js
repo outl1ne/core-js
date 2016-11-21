@@ -98,6 +98,20 @@ export function openModal(modal) {
 
   if (!$modal || $modal.length === 0 || isModalOpen($modal)) return false;
 
+  if (!setModalOpen($modal)) return false;
+
+  window.dispatchEvent(new CustomEvent('modal:opened', { detail: {
+    type: 'modal:opened', $modal, name
+  } }));
+
+  return true;
+}
+
+/**
+ * First step in opening a modal. Sets the DOM attributes and classes when necessary.
+ * Doesn't dispatch events.
+ */
+function setModalOpen($modal) {
   const name = $modal.attr(containerAttribute);
   const disableGlobalClassValue = $modal.attr(disableGlobalClassAttribute);
   const shouldShowGlobalClass = typeof disableGlobalClassValue === 'undefined' || disableGlobalClassValue === 'false';
@@ -105,10 +119,6 @@ export function openModal(modal) {
   $modal.attr(openAttribute, true);
   if (shouldShowGlobalClass) $globalContainer.addClass(`modal-${getClassFriendlyName(name)}-open`);
   if (reportOpenModals) $globalContainer.addClass(`modal-open`);
-
-  window.dispatchEvent(new CustomEvent('modal:opened', { detail: {
-    type: 'modal:opened', $modal, name
-  } }));
 
   return true;
 }
@@ -189,6 +199,8 @@ function initializeOpenAttributes() {
     const $modal = $(this);
     if ($modal.attr(openAttribute) !== 'true') {
       $modal.attr(openAttribute, false);
+    } else {
+      setModalOpen($modal);
     }
   });
 }

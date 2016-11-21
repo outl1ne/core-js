@@ -3,6 +3,7 @@
 import expect from 'expect';
 import renderToDom from '../utils/renderToDom';
 import { modals } from '../../dist/index';
+import $ from 'jquery';
 
 describe(`Modal`, function() {
 
@@ -87,6 +88,23 @@ describe(`Modal`, function() {
     modals.closeModal('testmodal');
     expect(openSpy.calls.length).toBe(1);
     expect(closeSpy.calls.length).toBe(1);
+  });
+});
+
+describe(`Modal that is opened by default`, () => {
+  beforeEach(`Init`, () => {
+    renderToDom(`
+      <div data-modal="testmodal" data-modal-open="true">
+        <button data-modal-closer="testmodal"></button>
+      </div>
+    `);
+
+    modals.init();
+  });
+
+  it(`should give html the classes to show that it's open`, () => {
+    expect($('html').hasClass('modal-open')).toBe(true);
+    expect($('html').hasClass('modal-testmodal-open')).toBe(true);
   });
 });
 
