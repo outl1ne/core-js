@@ -4,6 +4,13 @@ When clicking a link that has a hash corresponding to an element's ID, the viewp
 
 ## Example
 
+#### HTML
+```
+<a href="#products">Scroll to products</a>
+<div id="products"></div>
+```
+
+#### JavaScript
 ```
 import { initSmoothScrollToAnchor } from '@optimistdigital/core-js';
 initSmoothScrollToAnchor(250);
