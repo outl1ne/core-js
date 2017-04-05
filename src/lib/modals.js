@@ -50,6 +50,17 @@ export function init(options = {}) {
 }
 
 /**
+ * Shuts down the modal logic by clearing all event listeners.
+ * Modals stay in their current state.
+ */
+export function dispose() {
+  $(`[${togglerAttribute}]`).off('click', togglerClick);
+  $(`[${openerAttribute}]`).off('click', openerClick);
+  $(`[${closerAttribute}]`).off('click', closerClick);
+  $(document).off('keydown', onKeyPress);
+}
+
+/**
  * Sets variables based on options object, or defaults. This should only be called from the constructor.
  * @param {object} [o] Options object (possible values documented in init())
  */

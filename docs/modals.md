@@ -53,6 +53,7 @@ modals.closeModal($('[data-modal="checkout-modal"]')); // Passing in jquery obje
 |closeAllModals()|Closes all currently open modals|
 |isAnyModalOpen()|Returns true if any modal is currently open|
 |isModalOpen(modal)|Returns true if the modal is open|
+|dispose()|Shuts down the modal logic by clearing all event listeners.|
 
 ## Events
 
