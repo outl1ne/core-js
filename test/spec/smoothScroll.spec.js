@@ -15,7 +15,7 @@ describe(`Smooth scroll`, function() {
     `);
 
     $('#test')[0].getBoundingClientRect = () => ({ top: 10000 });
-    document.documentElement.clientHeight = document.body.offsetHeight = 100000;
+    // document.documentElement.clientHeight = document.body.offsetHeight = 100000;
     window.pageYOffset = 5;
 
     initSmoothScrollToAnchor();
