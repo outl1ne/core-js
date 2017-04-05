@@ -5,6 +5,7 @@ This is a collection of JS functionalities that we commonly need to use. Documen
 - [Modals](https://github.com/optimistdigital/core-js/blob/master/docs/modals.md)
 - [Device info](https://github.com/optimistdigital/core-js/blob/master/docs/deviceInfo.md)
 - [Optimized events](https://github.com/optimistdigital/core-js/blob/master/docs/optimizedEvents.md)
+- [Custom events](https://github.com/optimistdigital/core-js/blob/master/docs/customEvents.md)
 - [Smooth scroll](https://github.com/optimistdigital/core-js/blob/master/docs/smoothScroll.md)
 
 # Development
