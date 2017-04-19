@@ -1,5 +1,6 @@
 import './lib/polyfill/requestAnimationFrame'; // Polyfills requestAnimationFrame (CustomEvent depends on this)
 import './lib/polyfill/CustomEvent'; // Polyfills custom events
+import './lib/polyfill/arrayFind'; // Polyfills Array.prototype.find
 
 import { initSmoothScrollToAnchor } from './lib/smoothScroll';
 import * as modals from './lib/modals';
