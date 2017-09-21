@@ -9,7 +9,8 @@
 import $ from 'jquery';
 
 export function initSmoothScrollToAnchor(time = 500) {
-  $('a[href*="#"]:not([href="#"])').click(function smoothScrollToAnchor() {
+  $('a[href*="#"]:not([href="#"])').click(function smoothScrollToAnchor(event) {
+    event.preventDefault();
     if (window.location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '')
       && window.location.hostname === this.hostname) {
       let target = $(this.hash);
