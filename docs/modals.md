@@ -67,14 +67,6 @@ modals.closeModal('checkout-modal'); // Passing in jquery object works too
 
 Most of these are just for customizing the data attributes that you will be use, and can probably left default
 
-| Option                  | Default                      | Description                                                                                                                                              |
-| ----------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| globalContainerSelector | \$(document.documentElement) | Selector for the DOM element that will contain information about whether modals are open or not.                                                         |
-| reportOpenModals        | true                         | Whether or not the global container should report whether a modal is open or not. You can use this to add overflow: hidden on body when modals are open. |
-| containerAttribute      | 'data-modal'                 | Attr. for the modal container that will contain the modal's name                                                                                         |
-| togglerAttribute        | 'data-modal-toggler'         | Attr. that contains a modal's name and will toggle that modal when clicked                                                                               |
-| closerAttribute         | 'data-modal-closer'          | Attr. that contains a modal's name and will close that modal when clicked                                                                                |
-| openerAttribute         | 'data-modal-opener'          | Attr. that contains a modal's name and will open that modal when clicked                                                                                 |
-| openAttribute           | 'data-modal-open'            | Attr. that determines whether the modal is open or not.                                                                                                  |
-| closeOnOutsideAttribute | 'data-close-on-esc'          | Attr. that determines whether the modal should close when the escape key is pressed. (Missing value is treated as true)                                  |
-| closeOnOutsideAttribute | 'data-disable-global-class'  | Attr. that determines whether the global container should get a class indicating that the modal is open.                                                 |
+| Option           | Default | Description                                                                                                                                          |
+| ---------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| reportOpenModals | true    | Whether or not the html element should report whether a modal is open or not. You can use this to add overflow: hidden on body when modals are open. |
