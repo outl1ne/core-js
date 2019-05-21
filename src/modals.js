@@ -1,5 +1,5 @@
 export default {
   init() {
-    console.log('Todo');
+    console.log('Todo: modals');
   },
 };
