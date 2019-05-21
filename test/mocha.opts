@@ -1,5 +1,0 @@
---require test/utils/setup.js
---require test/utils/dom.js
---require test/utils/jquery.js
---require expect
---reporter nyan
