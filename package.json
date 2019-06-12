@@ -7,10 +7,9 @@
   "module": "dist/index.mjs",
   "scripts": {
     "lint": "eslint -c .eslintrc src; exit 0",
-    "build": "microbundle",
-    "dev": "microbundle watch",
-    "dev-examples": "cd examples && npm run dev",
-    "prepublish": "npm run build",
+    "build": "del-cli lib && rollup --config",
+    "dev": "rollup --config --watch",
+    "prepublish": "npm run test && npm run build",
     "test": "jest"
   },
   "repository": {
@@ -32,7 +31,13 @@
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-react": "^7.13.0",
     "jest": "^24.8.0",
-    "microbundle": "^0.11.0",
     "npm-run-all": "^4.1.5"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.4.5",
+    "del-cli": "^2.0.0",
+    "rollup": "^1.15.1",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-terser": "^5.0.0"
   }
 }
