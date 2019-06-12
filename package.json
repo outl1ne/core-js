@@ -2,9 +2,6 @@
   "name": "@optimistdigital/core-js",
   "version": "2.4.2",
   "description": "Optimist Digital core JS modules",
-  "source": "src/index.js",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "scripts": {
     "lint": "eslint -c .eslintrc src; exit 0",
     "build": "del-cli lib && rollup --config",
