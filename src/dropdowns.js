@@ -27,9 +27,13 @@ function init() {
  * @param {HTMLElement} dropdown - dropdown element to initialize
  */
 function initDropdown(dropdown) {
+  if (!dropdown.dom.dataset.dropdownOpen) {
+    dropdown.dom.setAttribute('data-dropdown-open', 'false');
+  }
   dropdown.dom.querySelector('[data-toggle-dropdown]').addEventListener('click', () => toggleDropdown(dropdown));
 
   // Close on outside click
+
   onOutsideClick(dropdown.dom, () => closeDropdown(dropdown));
 
   // Close on escape keypress
@@ -130,4 +134,7 @@ function getTransform(element, lastTransform) {
 
 export default {
   init,
+  openDropdown,
+  closeDropdown,
+  toggleDropdown,
 };

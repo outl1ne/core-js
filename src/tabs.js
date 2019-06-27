@@ -9,13 +9,19 @@ function init() {
 }
 
 function initTabs(tabEl) {
+  let initialActiveTabSet = false;
   tabEl.querySelectorAll('[data-tab-buttons] button').forEach(button => {
     button.addEventListener('click', evt => {
       const el = evt.currentTarget;
       const index = Array.from(el.parentNode.children).indexOf(el);
       activateTab(tabEl, index);
     });
+    if (button.classList.contains('is-active')) initialActiveTabSet = true;
   });
+  if (initialActiveTabSet === false) {
+    tabEl.querySelector('[data-tab-buttons] button').classList.add('is-active');
+    tabEl.querySelector('[data-tab-content] > *').classList.add('is-active');
+  }
 }
 
 function activateTab(tabEl, index) {

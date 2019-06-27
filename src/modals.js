@@ -36,6 +36,8 @@ function initOpenModal(modalName) {
 }
 
 function openModal(modalName) {
+  if (modalName == null) throw new Error('Please pass a modal name to openModal.');
+
   const modal = document.querySelector(`[data-modal=${modalName}]`);
   modal.setAttribute('data-modal-open', 'true');
   window.dispatchEvent(
@@ -59,6 +61,7 @@ function initCloseModal(modalName) {
 }
 
 function closeModal(modalName) {
+  if (modalName == null) throw new Error('Please pass a modal name to closeModal.');
   const modal = document.querySelector(`[data-modal=${modalName}]`);
   window.dispatchEvent(
     new CustomEvent('modal:closed', {
@@ -82,6 +85,7 @@ function initToggleModal(modalName) {
 }
 
 function toggleModal(modalName) {
+  if (modalName == null) throw new Error('Please pass a modal name to toggleModal.');
   const modal = document.querySelector(`[data-modal=${modalName}]`);
   if (modal.getAttribute('data-modal-open') === 'true') closeModal(modalName);
   else openModal(modalName);

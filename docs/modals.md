@@ -24,7 +24,7 @@ Note: We don't add any styles to the modals. You should use the data-modal-open 
 #### JavaScript
 
 ```
-import { modals } from '@optimistdigital/core-js';
+import modals from '@optimistdigital/core-js/lib/modals';
 
 modals.init();
 window.addEventListener('modal:opened', evt => console.log(evt.detail.name));

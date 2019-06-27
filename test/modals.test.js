@@ -1,5 +1,5 @@
 const renderToDom = require('./renderToDom');
-const { modals } = require('../dist/index');
+const modals = require('../lib/modals');
 
 describe('Modals', () => {
   beforeEach(() => {
@@ -48,5 +48,19 @@ describe('Modals', () => {
     expect(document.documentElement.classList.contains('modal-testmodal-open')).toBe(true);
     toggler.click();
     expect(document.documentElement.classList.contains('modal-testmodal-open')).toBe(false);
+  });
+
+  it(`should toggle the modal modal-open data attribute when openModal()/closeModal()/toggleModal() functions are called`, () => {
+    const modal = document.querySelector('[data-modal="testmodal"]');
+
+    expect(modal.dataset.modalOpen).toBe('false');
+    modals.openModal('testmodal');
+    expect(modal.dataset.modalOpen).toBe('true');
+    modals.closeModal('testmodal');
+    expect(modal.dataset.modalOpen).toBe('false');
+    modals.toggleModal('testmodal');
+    expect(modal.dataset.modalOpen).toBe('true');
+    modals.toggleModal('testmodal');
+    expect(modal.dataset.modalOpen).toBe('false');
   });
 });
