@@ -1,5 +1,7 @@
 # Tabs
 
+Adds 'is-active' class to to the clicked button and the corresponding content area. If initially active tab has not been set (by adding 'is-active' class to one of the buttons manually), the first tab will be active when the page is rendered.
+
 ## Example
 
 #### HTML
@@ -20,14 +22,6 @@
         </div>
 
         <style>
-            [data-tab-buttons] button {
-                display: gray;
-            }
-
-            [data-tab-buttons] button.is-active {
-                background-color: lime;
-            }
-
             [data-tab-content] > * {
                 display: none;
             }

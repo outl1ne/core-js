@@ -14,7 +14,8 @@
     "url": "git+https://github.com/optimistdigital/core-js.git"
   },
   "contributors": [
-    "Matis Lepik <matis.lepik@gmail.com> (https://matislepik.com/)"
+    "Matis Lepik <matis.lepik@gmail.com> (https://matislepik.com/)",
+    "Marika Must <must.marika@gmail.com>"
   ],
   "license": "MIT",
   "bugs": {
