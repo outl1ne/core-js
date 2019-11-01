@@ -20,7 +20,11 @@ function init() {
   });
   document.querySelectorAll('[data-modal]').forEach(modal => {
     const modalName = modal.dataset.modal;
-    closeModalOnEsc(modalName);
+
+    if (modal.dataset.closeOnEsc !== 'false') {
+      closeModalOnEsc(modalName);
+    }
+
     if (!modal.dataset.modalOpen) {
       modal.dataset.modalOpen = false;
     }
@@ -93,11 +97,9 @@ function toggleModal(modalName) {
 
 function closeModalOnEsc(modalName) {
   const modal = document.querySelector(`[data-modal=${modalName}]`);
-  if (modal.dataset.closeOnEsc === 'true' || typeof modal.dataset.closeOnEsc === 'undefined') {
-    window.addEventListener('keydown', event => {
-      if (event.code === 'Escape') {
-        closeModal(modalName);
-      }
-    });
-  }
+  window.addEventListener('keydown', event => {
+    if (event.code === 'Escape') {
+      closeModal(modalName);
+    }
+  });
 }

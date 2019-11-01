@@ -2,23 +2,14 @@ import debounce from 'lodash-es/debounce';
 import onOutsideClick from './utils/onOutsideClick';
 
 const SHOULD_KEEP_IN_VIEWPORT = true;
-
-/**
- * Wrapper around the dom node so we can store additional data
- */
-class Dropdown {
-  constructor(dom) {
-    this.dom = dom;
-    this.lastTransform = { x: 0, y: 0 };
-  }
-}
+const LAST_TRANSFORM_KEY = '__lastTransform';
 
 /**
  * Initializes all dropdowns on the page, adding event listeners etc
  */
 function init() {
   document.querySelectorAll('[data-dropdown]').forEach(dropdown => {
-    initDropdown(new Dropdown(dropdown));
+    initDropdown(dropdown);
   });
 }
 
@@ -27,29 +18,34 @@ function init() {
  * @param {HTMLElement} dropdown - dropdown element to initialize
  */
 function initDropdown(dropdown) {
-  if (!dropdown.dom.dataset.dropdownOpen) {
-    dropdown.dom.setAttribute('data-dropdown-open', 'false');
+  dropdown[LAST_TRANSFORM_KEY] = { x: 0, y: 0 };
+
+  if (!dropdown.dataset.dropdownOpen) {
+    dropdown.setAttribute('data-dropdown-open', 'false');
   }
-  dropdown.dom.querySelector('[data-toggle-dropdown]').addEventListener('click', () => toggleDropdown(dropdown));
+  dropdown.querySelector('[data-toggle-dropdown]').addEventListener('click', () => toggleDropdown(dropdown));
 
   // Close on outside click
-
-  onOutsideClick(dropdown.dom, () => closeDropdown(dropdown));
+  if (dropdown.dataset.closeOnOutsideClick !== 'false') {
+    onOutsideClick(dropdown, () => closeDropdown(dropdown));
+  }
 
   // Close on escape keypress
-  window.addEventListener('keydown', event => {
-    if (event.code === 'Escape') {
-      closeDropdown(dropdown);
-    }
-  });
+  if (dropdown.dataset.closeOnEsc !== 'false') {
+    window.addEventListener('keydown', event => {
+      if (event.code === 'Escape') {
+        closeDropdown(dropdown);
+      }
+    });
+  }
 
   // Keep in viewport
-  if (SHOULD_KEEP_IN_VIEWPORT) {
+  if (dropdown.dataset.keepInView !== 'false') {
     window.addEventListener('resize', debounce(() => keepInViewport(dropdown), 100));
   }
 
   // If the dropdown doesn't have the attribute set by user, set it to closed for consistency
-  if (!dropdown.dom.hasAttribute('data-dropdown-open')) closeDropdown(dropdown);
+  if (!dropdown.hasAttribute('data-dropdown-open')) closeDropdown(dropdown);
 }
 
 /**
@@ -57,7 +53,7 @@ function initDropdown(dropdown) {
  * @return {boolean} - whether or not the dropdown is currently open
  */
 function isOpen(dropdown) {
-  return dropdown.dom.getAttribute('data-dropdown-open') === 'true';
+  return dropdown.getAttribute('data-dropdown-open') === 'true';
 }
 
 /**
@@ -76,7 +72,7 @@ function toggleDropdown(dropdown) {
  * @param {HTMLElement} dropdown - the dropdown that will be opened
  */
 function openDropdown(dropdown) {
-  dropdown.dom.setAttribute('data-dropdown-open', 'true');
+  dropdown.setAttribute('data-dropdown-open', 'true');
 
   if (SHOULD_KEEP_IN_VIEWPORT) {
     keepInViewport(dropdown);
@@ -88,7 +84,7 @@ function openDropdown(dropdown) {
  * @param {HTMLElement} dropdown - the dropdown that will be closed
  */
 function closeDropdown(dropdown) {
-  dropdown.dom.setAttribute('data-dropdown-open', 'false');
+  dropdown.setAttribute('data-dropdown-open', 'false');
 }
 
 /**
@@ -101,11 +97,11 @@ function keepInViewport(dropdown) {
   // No point in moving dropdown when it's closed
   if (!isOpen(dropdown)) return;
 
-  const content = dropdown.dom.querySelector('[data-dropdown-content]');
-  const transform = getTransform(content, dropdown.lastTransform);
+  const content = dropdown.querySelector('[data-dropdown-content]');
+  const transform = getTransform(content, dropdown[LAST_TRANSFORM_KEY]);
   content.style.transform = `translate(${transform.x}px, ${transform.y}px)`;
 
-  dropdown.lastTransform = transform;
+  dropdown[LAST_TRANSFORM_KEY] = transform;
 }
 
 /**

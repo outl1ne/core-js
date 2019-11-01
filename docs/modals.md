@@ -1,6 +1,9 @@
 # Modals
 
+Controls a modal's opened status with a `data-modal-open` attribute. The html element also gets a `data-{modalName}-open` class when a modal is open.
+
 Modals can be used with data attributes or the JavaScript API.
+
 Note: We don't add any styles to the modals. You should use the data-modal-open attribute to toggle visibility with CSS.
 
 ## Example
