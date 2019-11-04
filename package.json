@@ -6,7 +6,7 @@
     "lint": "eslint -c .eslintrc src; exit 0",
     "build": "del-cli lib && rollup --config",
     "dev": "rollup --config --watch",
-    "prepublish": "npm run test && npm run build",
+    "prepublish": "npm run build && npm run test",
     "test": "jest"
   },
   "repository": {
