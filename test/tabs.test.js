@@ -47,7 +47,6 @@ describe('Tabs', () => {
   });
 
   it(`should have 'is-active' class on one of the buttons and the corresponding content when rendering the page`, () => {
-    console.log('Oooo', document.body.outerHTML);
     const activeButtons = Array.from(document.querySelectorAll('[data-tab-buttons] > *')).filter(el =>
       el.classList.contains('is-active')
     );

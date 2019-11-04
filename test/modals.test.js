@@ -131,4 +131,42 @@ describe('Modals', () => {
     modals.toggleModal(modalName);
     expect(modal.dataset.modalOpen).toBe('false');
   });
+
+  it(`should trigger events on window when modal state changes`, () => {
+    const modalName = getRandomModalName();
+    renderToDom(`
+    <button data-modal-opener="${modalName}">Open modal</button>
+
+    <div data-modal="${modalName}">
+      <button data-modal-closer="${modalName}">Close modal</button>
+      <button data-modal-toggler="${modalName}">Toggle modal</button>
+      <div>Content here!</div>
+    </div>
+  `);
+
+    modals.init();
+
+    const openedSpy = jest.fn();
+    const closedSpy = jest.fn();
+
+    window.addEventListener('modal:opened', openedSpy);
+    window.addEventListener('modal:closed', closedSpy);
+
+    const opener = document.querySelector(`[data-modal-opener="${modalName}"]`);
+    const closer = document.querySelector(`[data-modal-closer="${modalName}"]`);
+    const toggler = document.querySelector(`[data-modal-toggler="${modalName}"]`);
+
+    opener.click();
+    closer.click();
+    toggler.click();
+    toggler.click();
+
+    modals.openModal(modalName);
+    modals.closeModal(modalName);
+    modals.toggleModal(modalName);
+    modals.toggleModal(modalName);
+
+    expect(openedSpy).toHaveBeenCalledTimes(4);
+    expect(closedSpy).toHaveBeenCalledTimes(4);
+  });
 });
