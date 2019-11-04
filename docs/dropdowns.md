@@ -1,81 +1,62 @@
-# lib&#x2F;dropdowns
+# Dropdowns
 
-DROPDOWNS:
 Uses data attributes to suggest whether a dropdown should be open or closed.
-NOTE: This doesn't change any visual style itself. You have to use CSS
-to implement the hiding of the dropdown. A basic version of this is
-implemented in the `.basic-dropdown` class (_basic-dropdown.scss).
-Examples of usage can be seen in tests or readme.md
 
-Extra behaviour:
-- If the user clicks outside of the dropdown, it closes automatically if data-close-on-outside-click is true.
-- The dropdown content is kept in viewport automatically if the `data-keep-in-view` attribute is present.
+NOTE: This doesn't change any visual style itself. You have to use CSS to implement the hiding of the dropdown.
 
+## Data attributes (_italics are optional_)
 
+| Attribute                            | Description                                                                                                |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| data-dropdown                        | Marks the container for the dropdown                                                                       |
+| data-dropdown-content                | Marks the content that shows up when the dropdown is open                                                  |
+| data-toggle-dropdown                 | Toggles the parent dropdown when clicked                                                                   |
+| _data-dropdown-open="false"_         | Gets automatically placed on the dropdown's container. Keeps track of whether the dropdown is open or not. |
+| _data-close-on-esc="true"_           | Whether or not pressing escape should close the dropdown.                                                  |
+| _data-keep-in-view="true"_           | Whether or not the dropdown's position should be transformed to ensure it doesn't go offscreen.            |
+| _data-close-on-outside-click="true"_ | Whether or not the dropdown should be closed when the user clicks outside of it.                           |
 
-* * *
+## Example
 
-### lib&#x2F;dropdowns.init(options) 
+### HTML
 
-Adds event listeners
+```
+<div data-dropdown>
+    <button data-toggle-dropdown>ET</button>
+    <ul class="dropdown-content" data-dropdown-content>
+        <li>lang 1</li>
+        <li>lang 2</li>
+        <li>lang 3</li>
+    </ul>
+</div>
 
-**Parameters**
+<style>
+      [data-dropdown-content] {
+        display: none;
+      }
+      [data-dropdown-open='true'] [data-dropdown-content] {
+        display: block;
+      }
+</style>
 
-**options**: `object`, Adds event listeners
+```
 
- - **options.togglerAttribute**: `string`, Attr. for child elements that toggle the dropdown on click
+### JavaScript
 
- - **options.keepInViewAttribute**: `string`, Attr. that determines whether the dropdown is kept in viewport automatically
+```js
+import dropdowns from '@optimistdigital/core-js/lib/dropdowns';
 
- - **options.containerAttribute**: `string`, Attr. for the containing element that keeps track of whether or not the dropdown is open
+/**
+ * Initializes the dropdown logic
+ */
 
- - **options.contentAttribute**: `string`, Attr. marking the visible content of the dropdown
+dropdowns.init();
 
- - **options.closeOnOutsideAttribute**: `string`, Attr. that determines whether the dropdown should close when mouseclick happens on the outside
+/**
+ * openDropdown/closeDropdown/toggleDropdown functions take the container's DOM node
+ */
 
-
-
-### lib&#x2F;dropdowns.parseOptions(options) 
-
-Sets variables based on options object, or defaults. This should only be called from init.
-
-**Parameters**
-
-**options**: `object`, Sets variables based on options object, or defaults. This should only be called from init.
-
-
-
-### lib&#x2F;dropdowns.toggleDropdown($dropdown) 
-
-Toggles the dropdown by changing the container attribute's value to true/false
-
-**Parameters**
-
-**$dropdown**: `object`, jQuery object corresponding to the dropdown container
-
-
-
-### lib&#x2F;dropdowns.keepInViewport() 
-
-Keeps all the dropdowns in view that have the keepInViewAttribute
-
-
-
-### lib&#x2F;dropdowns.closeDropdowns() 
-
-Closes all the dropdowns that have the closeOnOutsideAttribute
-
-
-
-
-* * *
-
-
-
-
-
-
-
-
-
-
+dropdowns.openDropdown(document.getElementById('language-switcher')); // Opens language-switcher dropdown
+dropdowns.closeDropdown(document.getElementById('language-switcher')); // Closes language-switcher dropdown
+dropdowns.toggleDropdown(document.getElementById('language-switcher')); // Toggles language-switcher dropdown
+```

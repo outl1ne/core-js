@@ -1,14 +1,32 @@
-This is a collection of JS functionalities that we commonly need to use. Documentation for each module can be found in the docs folder, or source code.
+This is a collection of JS functionalities that we commonly need to use.
 
 # Docs
 
-- [Modals](https://github.com/optimistdigital/core-js/blob/master/docs/modals.md)
-- [Device info](https://github.com/optimistdigital/core-js/blob/master/docs/deviceInfo.md)
-- [Optimized events](https://github.com/optimistdigital/core-js/blob/master/docs/optimizedEvents.md)
-- [Custom events](https://github.com/optimistdigital/core-js/blob/master/docs/customEvents.md)
-- [Smooth scroll](https://github.com/optimistdigital/core-js/blob/master/docs/smoothScroll.md)
+-   To install, run `npm install @optimistdigital/core-js`
+
+## Modals - [docs](docs/modals.md)
+
+```
+import modals from '@optimistdigital/core-js/lib/modals';
+modals.init();
+```
+
+## Dropdowns - [docs](docs/dropdowns.md)
+
+```
+import dropdowns from '@optimistdigital/core-js/lib/dropdowns';
+dropdowns.init();
+```
+
+## Tabs - [docs](docs/tabs.md)
+
+```
+import tabs from '@optimistdigital/core-js/lib/tabs';
+tabs.init();
+```
 
 # Development
 
-- Build: `npm run build`
-- Testing with Mocha + jsdom: `npm test`
+1. Install dependencies: `npm install`
+2. Install dependencies for example project: `(cd examples && npm install)`
+3. Start dev servers: `npm run dev`
