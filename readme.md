@@ -28,5 +28,5 @@ tabs.init();
 # Development
 
 1. Install dependencies: `npm install`
-2. Install dependencies for example project: `(cd examples && npm install)`
-3. Start dev servers: `npm run dev`
+2. Start dev servers: `npm run dev`
+3. Run tests to confirm your work: `npm run test`
